@@ -1,12 +1,9 @@
----- drop ----
-DROP TABLE IF EXISTS `test_tqable`;
+use sql_puzzle;
 
----- create ----
-create table IF not exists `test_table`
-(
- `id`               INT(20) AUTO_INCREMENT,
- `name`             VARCHAR(20) NOT NULL,
- `created_at`       Datetime DEFAULT NULL,
- `updated_at`       Datetime DEFAULT NULL,
-    PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE members (
+  id int(10) unsigned not null auto_increment,
+  name varchar(255) not null,
+  created_time datetime not null default current_timestamp,
+  updated_time datetime not null default current_timestamp on update current_timestamp,
+  primary key (id)
+);
