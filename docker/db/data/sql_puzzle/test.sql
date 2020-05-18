@@ -1,13 +1,28 @@
 use sql_puzzle;
 
-CREATE TABLE fiscal_year_table(
-  fiscal_year integer NOT NULL PRIMARY KEY,
-  start_date date NOT NULL,
-   CHECK ((EXTRACT(year from start_date) = fiscal_year - 1)
-          AND (EXTRACT(MONTH from start_date) = 10)
-          AND (EXTRACT(DAY from start_date) = 1)),
-  end_date DATE NOT NULL ,
-   CHECK ((EXTRACT(YEAR from end_date) = fiscal_year)
-          AND (EXTRACT(MONTH from end_date) = 9)
-          AND (EXTRACT(DAY from end_date) = 30))
+CREATE TABLE emp(
+emp_id INTEGER  NOT NULL,
+PRIMARY KEY (emp_id)
+);
+
+CREATE TABLE excuse_list(
+reason_code CHAR(40)  NOT NULL,
+PRIMARY KEY (reason_code)
+);
+
+CREATE TABLE Absenteeism(
+emp_id INTEGER  NOT NULL,
+INDEX emp_id (emp_id),
+    FOREIGN KEY (emp_id)
+        REFERENCES emp(emp_id)
+        ON DELETE CASCADE,
+absent_date date NOT NULL,
+reason_code CHAR(40) NOT NULL,
+INDEX reason_code (reason_code),
+    FOREIGN KEY (reason_code)
+        REFERENCES excuse_list(reason_code)
+        ON DELETE CASCADE,
+security_points INTEGER NOT NULL
+  CHECK (security_points BETWEEN 1 and 4),
+PRIMARY KEY (emp_id,absent_date)
 );
